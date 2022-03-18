@@ -40,8 +40,15 @@ namespace HI_JeanInternational
 
             }
 
-            Console.WriteLine("The final rating for each chemical ranked form highest to lowest:");
+            //Rank all the chemicals and diplay the info to the user
+            Console.WriteLine("The final rating for each chemical ranked form lowest to highest:");
+            foreach (KeyValuePair<string, float> chemical in namesAndRatings.OrderBy(key => key.Value))
+            {
+                Console.WriteLine($"Chemical Name: {chemical.Key}, Rating: {chemical.Value}");
+            }
 
+            Console.WriteLine("Thank you for using my program. Have a nice day!");
+            
 
         }
         static void RatingCalculator(int userOrComputer) 
@@ -86,7 +93,7 @@ namespace HI_JeanInternational
             Console.WriteLine($"The final rating for {chemicalName} is {finalChemAverage}\n");
 
             //Chemical and it's rating is added to list containing all chemicals and list containing all ratings
-            namesAndRatings.Add($"{chemicalName}",finalChemAverage);
+            namesAndRatings.Add(chemicalName,finalChemAverage);
         }
     }
 }
