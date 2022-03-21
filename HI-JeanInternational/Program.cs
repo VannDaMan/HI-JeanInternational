@@ -7,7 +7,7 @@ namespace HI_JeanInternational
     class Program
     {
         static IDictionary<string, float> namesAndRatings = new Dictionary<string, float>();
-
+        static List<string> CHEMICALLIST = new List<string>() { };
         static void Main(string[] args)
         {
             //Start Menu
@@ -15,7 +15,7 @@ namespace HI_JeanInternational
                 "Would you like to enter the data yourself or use the computer's randomly generated values?\n" +
                 "1. Enter the Data Myself.\n" +
                 "2. Use randomly generated values.");
-            int userOrComputer = Convert.ToInt32(Console.ReadLine());
+            int userOrComputer = InputChecker(1,2);
 
             //Run the method once so that they get at least one chemical done
             RatingCalculator(userOrComputer);
@@ -27,7 +27,7 @@ namespace HI_JeanInternational
                 Console.WriteLine("Do you want to test another chemical?\n" +
                     "1: Yes\n" +
                     "2: No\n");
-                int stopOrGo = Convert.ToInt32(Console.ReadLine());
+                int stopOrGo = InputChecker(1,2);
 
                 if (stopOrGo == 1)
                 {
@@ -58,7 +58,7 @@ namespace HI_JeanInternational
 
             //User inputs the Data
             Console.WriteLine("What Chemical are you testing?");
-            string chemicalName = Console.ReadLine();
+            string chemicalName = ChemicalChecker();
 
             //A comment so that the user knows what is happening
             Console.WriteLine("The following process will repeat 5 times for a more accurate result.\n");
@@ -68,7 +68,7 @@ namespace HI_JeanInternational
                 if (userOrComputer == 1)
                 {
                    Console.WriteLine($"{i}: How many germs are you starting off with?");
-                   numGerms = Convert.ToInt32(Console.ReadLine());
+                    numGerms = InputChecker(1,1000);
                 }
                 else
                 {
@@ -77,10 +77,10 @@ namespace HI_JeanInternational
                    Console.WriteLine($"{i}: You are starting off with {numGerms} germs.");
                 }
                 Console.WriteLine($"{i}: {chemicalName} is being added to {numGerms} germs. How long (in seconds) was this done for?");
-                int killTime = Convert.ToInt32(Console.ReadLine());
+                int killTime = InputChecker(1,600);
 
                 Console.WriteLine($"{i}: How many Germs were left after the time was up?");
-                int remainingGerms = Convert.ToInt32(Console.ReadLine());
+                int remainingGerms = InputChecker(1,1000);
 
                 //The rating is calculated
                 float chemRating = (numGerms - remainingGerms) / killTime;
@@ -94,6 +94,47 @@ namespace HI_JeanInternational
 
             //Chemical and it's rating is added to list containing all chemicals and list containing all ratings
             namesAndRatings.Add(chemicalName,finalChemAverage);
+            CHEMICALLIST.Add(chemicalName);
+        }
+
+        static int InputChecker(int valueMin, int valueMax)
+        {
+            while(true) 
+            {
+                try
+                {
+                    int userInput = Convert.ToInt32(Console.ReadLine());
+                    if (userInput >= valueMin && userInput <= valueMax)
+                    {
+                        return userInput;
+                    }
+                    else 
+                    {
+                        Console.WriteLine($"ERROR! Must be an integer between {valueMin} and {valueMax}.\n");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine($"ERROR! Must be an integer between {valueMin} and {valueMax}.\n");
+                }
+            }
+        }
+
+        static string ChemicalChecker() 
+        {
+            while (true)
+            {
+                string userInput = Console.ReadLine();
+
+                if (CHEMICALLIST.Contains(userInput))
+                {
+                    Console.WriteLine("ERROR! You cannot enter the same Chemical twice.");
+                }
+                else 
+                {
+                    return userInput;
+                }
+            }
         }
     }
 }
