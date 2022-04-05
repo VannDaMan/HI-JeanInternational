@@ -1,9 +1,11 @@
-﻿using System;
+﻿// Imports
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HI_JeanInternational
 {
+    //Starting Point
     class Program
     {
         //Global Variables
@@ -11,7 +13,7 @@ namespace HI_JeanInternational
         static List<string> CHEMICALLIST = new List<string>() { };
         static void Main(string[] args)
         {
-            //Start Menu
+            //Start Menu/Main method
             Console.WriteLine("" +
                 "><><><><><>><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><\n" +
                 "Welcome.\n" +
@@ -47,17 +49,18 @@ namespace HI_JeanInternational
 
             //Rank all the chemicals and diplay the info to the user
             Console.WriteLine("\n><><><><><>><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><\n" +
-                "The final rating for each chemical ranked form lowest to highest:");
+                "The final rating for each chemical ranked from lowest to highest:");
             foreach (KeyValuePair<string, double> chemical in namesAndRatings.OrderBy(key => key.Value))
             {
                 Console.WriteLine($"Chemical Name: {chemical.Key}, Rating: {chemical.Value}");
             }
-
+            // End message
             Console.WriteLine("\nThank you for using my program. Have a nice day!\n" +
                 "><><><><><>><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><");
             
 
         }
+        //Method for testing Chemicals
         static void RatingCalculator(int userOrComputer) 
         {
             int numGerms = 0;
@@ -71,8 +74,10 @@ namespace HI_JeanInternational
             Console.WriteLine("The following process will repeat 5 times for a more accurate result.\n" +
                 "-------------------------------------------------------------------------");
 
-            for (int i = 1; i < 6; i++)
+            //loop and then find the average rating for the chemical being tested
+            for (int i = 1; i < 2; i++)
             {
+                // this will check if the user wants a random amount of germs or a specific amount, and then adjusts the program accdordingly
                 if (userOrComputer == 1)
                 {
                    Console.WriteLine($"How many germs are you starting off with?");
@@ -114,6 +119,7 @@ namespace HI_JeanInternational
                 try
                 {
                     int userInput = Convert.ToInt32(Console.ReadLine());
+                    // Make sure the input is within our parameters
                     if (userInput >= valueMin && userInput <= valueMax)
                     {
                         return userInput;
@@ -125,6 +131,7 @@ namespace HI_JeanInternational
                             $"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                 }
+                // make sure strings wont break our program
                 catch
                 {
                     Console.WriteLine($"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
@@ -142,13 +149,21 @@ namespace HI_JeanInternational
                 Console.WriteLine("\nWhat Chemical are you testing?");
                 string userInput = Console.ReadLine();
 
+                // Check if the chemical has already been tested. If so ERROR! Otherwise it's fine.
                 if (CHEMICALLIST.Contains(userInput))
                 {
                     Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
                         "ERROR! You cannot enter the same Chemical twice.\n" +
                         "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
-                else 
+                // This makes sure the user cannot use the chemical "shrekked cheese".
+                else if (userInput == "shrekked cheese") 
+                {
+                    Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" +
+                            "ERROR! You cannot enter shrekked cheese!\n" +
+                            "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+                else
                 {
                     return userInput;
                 }
